@@ -9,7 +9,7 @@ let container=document.createElement('div')
     container.append(Header(data.title))
     container.append(Tasks(data.tasks))
     container.append(Button('+', dialogOpen))
-    container.append(AddTaskDialog(data.addTaskDialogIsOpen))
+    container.append(AddTaskDialog(data.addTaskDialogIsOpen.isOpen))
 
     return container
 }

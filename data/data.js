@@ -14,33 +14,59 @@ export const data = {
             title: 'JS',
         }
     ],
-    addTaskDialogIsOpen: false,
-    error: false
+    addTaskDialogIsOpen: {
+        isOpen: false,
+        error: null
+    }
 }
-function addTaskDialogOpen(){
-    data.addTaskDialogIsOpen=true
+
+function setError(error) {
+    data.addTaskDialogIsOpen.error = error
     subscriber()
 }
-export function addTaskDialogClose(){
-    data.addTaskDialogIsOpen=false
+
+export function unSetError() {
+    data.addTaskDialogIsOpen.error = null
     subscriber()
 }
-export  function dialogOpen(){
+
+function addTaskDialogOpen() {
+    unSetError()
+    data.addTaskDialogIsOpen.isOpen = true
+    subscriber()
+}
+
+export function addTaskDialogClose() {
+    data.addTaskDialogIsOpen.isOpen = false
+    subscriber()
+}
+
+export function dialogOpen() {
     addTaskDialogOpen()
 }
-export function addTak(title){
-    let newTask={
+
+export function addTask(title) {
+    unSetError()
+    if (title.trim().length > 0) {
+        let newTask = {
             id: crypto.randomUUID(),
             title: title,
         }
-        data.tasks=[...data.tasks, newTask]
+        data.tasks = [...data.tasks, newTask]
+    } else {
+        setError('ERROR!')
+    }
     subscriber()
 }
-export function deleteTask(idTask){
-    data.tasks=data.tasks.filter(t=>t.id!==idTask)
+
+export function deleteTask(idTask) {
+    data.tasks = data.tasks.filter(t => t.id !== idTask)
     subscriber()
 }
-function subscriber(){}
-export function rerenderUI(callback){
-    subscriber=callback
+
+function subscriber() {
+}
+
+export function rerenderUI(callback) {
+    subscriber = callback
 }
