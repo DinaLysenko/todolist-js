@@ -4,14 +4,17 @@ export const data = {
         {
             id: crypto.randomUUID(),
             title: 'HTML',
+            editTask: false,
         },
         {
             id: crypto.randomUUID(),
             title: 'CSS',
+            editTask: false,
         },
         {
             id: crypto.randomUUID(),
             title: 'JS',
+            editTask: false,
         }
     ],
     addTaskDialogIsOpen: {
@@ -61,6 +64,15 @@ export function addTask(title) {
 
 export function deleteTask(idTask) {
     data.tasks = data.tasks.filter(t => t.id !== idTask)
+    subscriber()
+}
+
+export function inputToEditTaskActive(taskId) {
+    data.tasks.map(t => t.id === taskId ? t.editTask = true : '')
+    subscriber()
+}
+export function inputToEditTaskUnActive(taskId) {
+    data.tasks.map(t => t.id === taskId ? t.editTask = false : '')
     subscriber()
 }
 
